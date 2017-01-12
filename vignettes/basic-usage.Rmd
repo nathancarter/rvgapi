@@ -1,0 +1,20 @@
+---
+title: "Basic Usage"
+author: "Nathan Carter"
+date: "January 12, 2017"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Put the title of your vignette here}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+## Stub
+
+This documentation is still a stub.  Here is a tiny example use of the API.
+
+```
+lotsOfData <- getMatches()
+lotsOfData$id
+getMatch( lotsOfData$id[1] )
+```
