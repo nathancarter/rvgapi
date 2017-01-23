@@ -1,0 +1,52 @@
+---
+title: "Testing RVGAPI"
+author: "Nathan Carter"
+date: "January 21, 2017"
+output: html_document
+---
+
+```{r setup, warning=FALSE}
+source( './R/main.R' )
+```
+
+We fetch a set of matches like this.
+
+```{r, cache=TRUE}
+query <- VGAPI$new() # optional parameter is bearer, default aaa.bbb.ccc
+query$fetchMatches() # optional parameter is which page of results
+query$count()
+```
+
+We get a match from it like this.
+
+```{r}
+onematch <- query$getMatch( 1 ) # index, from 1 up to the count listed above
+inherits( onematch, 'VGMatch' )
+onematch$getTime()
+onematch$getDuration()
+onematch$getGameMode()
+onematch$getRegion()
+onematch$getEndGameReason()
+```
+
+We get the roster for one of the two sides in a match like this.
+
+```{r}
+roster <- onematch$getRoster( 1 ) # or 2
+inherits( roster, 'VGRoster' )
+roster$getStats()
+roster$getTeamName()
+```
+
+We get the members of that roster like this.
+
+```{r}
+first <- roster$getMembers()[[1]]
+inherits( first, 'VGPlayer' )
+first$getName()
+first$getStats()
+first$getHeroName()
+first$getHeroStats()
+```
+
+
