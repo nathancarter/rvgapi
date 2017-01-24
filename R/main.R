@@ -16,10 +16,47 @@ VGAPI <- R6Class(
       private$handleOptions <- list()
     },
     setRegion = function ( region ) private$region <- region,
-    fetchMatches = function ( pageOffset = 0 ) {
-      private$fetchedMatches <- private$fetchData(
-        paste0( 'matches?', encodeURIComponent( 'page[offset]' ), '=', pageOffset ) )
+    setStartTime = function ( startTime ) {
+      if ( is.character( startTime ) ) {
+        result <- as.POSIXct( startTime, format='%Y-%m-%dT%H:%M:%SZ' )
+        if ( !is.na( result ) ) {
+          attr( result, 'tzone' ) <- 'UTC'
+          startTime <- result
+        }
+      }
+      private$startTime <- startTime
     },
+    setEndTime = function ( endTime ) {
+      if ( is.character( endTime ) ) {
+        result <- as.POSIXct( endTime, format='%Y-%m-%dT%H:%M:%SZ' )
+        if ( !is.na( result ) ) {
+          attr( result, 'tzone' ) <- 'UTC'
+          endTime <- result
+        }
+      }
+      private$endTime <- endTime
+    },
+    setPlayerNames = function ( playerNames ) private$playerNames <- playerNames,
+    setTeamNames = function ( teamNames ) private$teamNames <- teamNames,
+    matchQuery = function ( pageOffset = 0 ) {
+      query <- paste0( 'matches?', encodeURIComponent( 'page[offset]' ), '=', pageOffset )
+      if ( !is.null( private$startTime ) )
+        query <- paste0( query, '&', encodeURIComponent( 'filter[createdAt-start]' ), '=',
+                         encodeURIComponent( strftime( private$startTime, format='%Y-%m-%dT%H:%M:%SZ', tz='UTC' ) ) )
+      if ( !is.null( private$endTime ) )
+        query <- paste0( query, '&', encodeURIComponent( 'filter[createdAt-end]' ), '=',
+                         encodeURIComponent( strftime( private$endTime, format='%Y-%m-%dT%H:%M:%SZ', tz='UTC' ) ) )
+      if ( !is.null( private$playerNames ) )
+        query <- paste0( query, '&', encodeURIComponent( 'filter[playerNames]' ), '=',
+                         paste( private$playerNames, collapse=',' ) )
+      if ( !is.null( private$teamNames ) )
+        query <- paste0( query, '&', encodeURIComponent( 'filter[teamNames]' ), '=',
+                         paste( private$teamNames, collapse=',' ) )
+      query
+    },
+    fetchMatches = function ( pageOffset = 0 )
+      private$fetchedMatches <- private$fetchData( self$matchQuery( pageOffset ) ),
+    getError = function () private$error,
     count = function () length( private$fetchedMatches$data ),
     getMatch = function ( index )
       VGMatch$new( private$fetchedMatches$data[[index]], self ),
@@ -32,8 +69,13 @@ VGAPI <- R6Class(
   private = list(
     rootUrl = 'https://api.dc01.gamelockerapp.com/',
     region = 'na',
+    startTime = NULL, # for filtering
+    endTime = NULL, # for filtering
+    playerNames = NULL, # for filtering
+    teamNames = NULL, # for filtering
     handleOptions = NULL,
     fetchedMatches = NULL,
+    error = NULL,
     getHandle = function () {
       handle <- new_handle()
       handle_setheaders(
@@ -47,10 +89,16 @@ VGAPI <- R6Class(
     },
     endPoint = function ( path )
       paste0( private$rootUrl, 'shards/', private$region, '/', path ),
-    fetchData = function ( path )
-      fromJSON( rawToChar( curl_fetch_memory(
-        private$endPoint( path ), handle = private$getHandle() )$content ),
-        simplifyDataFrame = FALSE )
+    fetchData = function ( path ) {
+      result <- curl_fetch_memory( private$endPoint( path ), handle = private$getHandle() )
+      if ( result$status_code == 200 ) {
+        private$error <- NULL
+        return( fromJSON( rawToChar( result$content ), simplifyDataFrame = FALSE ) )
+      } else {
+        private$error <- result
+        return( NULL )
+      }
+    }
   )
 )
 
@@ -61,8 +109,11 @@ VGMatch <- R6Class(
       private$match <- match
       private$api <- apiObject
     },
-    getTime = function ()
-      strptime( private$match$attributes$createdAt, '%Y-%m-%dT%H:%M:%SZ' ),
+    getTime = function () {
+      result <- as.POSIXct( private$match$attributes$createdAt, format='%Y-%m-%dT%H:%M:%SZ' )
+      attr( result, 'tzone' ) <- 'UTC'
+      result
+    },
     getDuration = function () private$match$attributes$duration,
     getGameMode = function () private$match$attributes$gameMode,
     getRegion = function () private$match$attributes$shardId,
