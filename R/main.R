@@ -127,7 +127,7 @@ VGMatch <- R6Class(
         private$lookup( private$match$relationships$rosters$data[[index]]$id ),
         private$api )
     },
-    cheater = function () private$fetchedMatches
+    cheater = function () private$match
   ),
   private = list(
     match = NULL,
