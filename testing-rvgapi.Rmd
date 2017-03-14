@@ -7,12 +7,14 @@ output: html_document
 
 ```{r setup, warning=FALSE}
 source( './R/main.R' )
+source( './R/my-api-key.R' ) # obviously I don't keep this in the repository
+# you can erase that line, or replace it with an import of your API key
 ```
 
 We fetch a set of matches like this.
 
 ```{r}
-query <- VGAPI$new() # optional parameter is bearer, default aaa.bbb.ccc
+query <- VGAPI$new( myAPIKey ) # not optional -- you must have a key
 query$fetchMatches() # optional parameter is which page of results
 query$getError() # will be null if all this succeeded
 query$count()
@@ -53,7 +55,7 @@ first$getHeroStats()
 You can filter your match set by time...
 
 ```{r}
-query <- VGAPI$new()
+query <- VGAPI$new( myAPIKey )
 # defaults to all matches in last 3 hours, but we can change it...how about the 5 minutes after midnight?
 query$setStartTime( '2017-01-11T00:00:00Z' ) # or a POSIXct date-time instance instead
 query$setEndTime( '2017-01-11T00:05:00Z' ) # or a POSIXct date-time instance instead
@@ -69,7 +71,7 @@ query$count()
 ...or by player or team name.
 
 ```{r}
-query <- VGAPI$new()
+query <- VGAPI$new( myAPIKey )
 query$setPlayerNames( 'CrIxX' ) # can be a comma-separated list (no spaces)
 # can also do setTeamNames( 'foo,bar,...' )
 query$fetchMatches()

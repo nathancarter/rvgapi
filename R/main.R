@@ -12,7 +12,8 @@ library(R6)
 VGAPI <- R6Class(
   'VGAPI',
   public = list(
-    initialize = function ( bearer = 'aaa.bbb.ccc' ) {
+    initialize = function ( APIKey ) {
+      private$APIKey = APIKey
       private$handleOptions <- list()
     },
     setRegion = function ( region ) private$region <- region,
@@ -61,12 +62,15 @@ VGAPI <- R6Class(
     getMatch = function ( index )
       VGMatch$new( private$fetchedMatches$data[[index]], self ),
     lookup = function ( id ) {
+      print( id )
+      if ( is.null( id ) ) return( NULL )
       for ( included in private$fetchedMatches$included )
         if ( included$id == id ) return( included )
       return( NA )
     }
   ),
   private = list(
+    APIKey = NULL, # must be provided at construction time
     rootUrl = 'https://api.dc01.gamelockerapp.com/',
     region = 'na',
     startTime = NULL, # for filtering
@@ -80,7 +84,7 @@ VGAPI <- R6Class(
       handle <- new_handle()
       handle_setheaders(
         handle,
-        'Authorization' = 'Bearer aaa.bbb.ccc',
+        'Authorization' = private$APIKey,
         'X-TITLE-ID' = 'semc-vainglory',
         'Accept' = 'application/vnd.api+json',
         .list = private$handleOptions

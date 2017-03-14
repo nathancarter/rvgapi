@@ -124,129 +124,157 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>source( './R/main.R' )</code></pre>
+<pre class="r"><code>source( './R/main.R' )
+source( './R/my-api-key.R' ) # obviously I don't keep this in the repository
+# you can erase that line, or replace it with an import of your API key</code></pre>
 <p>We fetch a set of matches like this.</p>
-<pre class="r"><code>query &lt;- VGAPI$new() # optional parameter is bearer, default aaa.bbb.ccc
+<pre class="r"><code>query &lt;- VGAPI$new( myAPIKey ) # not optional -- you must have a key
 query$fetchMatches() # optional parameter is which page of results
 query$getError() # will be null if all this succeeded</code></pre>
 <pre><code>## NULL</code></pre>
 <pre class="r"><code>query$count()</code></pre>
-<pre><code>## [1] 49</code></pre>
+<pre><code>## [1] 5</code></pre>
 <p>We get a match from it like this.</p>
 <pre class="r"><code>onematch &lt;- query$getMatch( 1 ) # index, from 1 up to the count listed above
 inherits( onematch, 'VGMatch' )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>onematch$getTime()</code></pre>
-<pre><code>## [1] &quot;2017-01-11 07:32:22 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2017-03-14 20:40:57 UTC&quot;</code></pre>
 <pre class="r"><code>onematch$getDuration()</code></pre>
-<pre><code>## [1] 1844</code></pre>
+<pre><code>## [1] 273</code></pre>
 <pre class="r"><code>onematch$getGameMode()</code></pre>
-<pre><code>## [1] &quot;ranked&quot;</code></pre>
+<pre><code>## [1] &quot;blitz_pvp_ranked&quot;</code></pre>
 <pre class="r"><code>onematch$getRegion()</code></pre>
 <pre><code>## [1] &quot;na&quot;</code></pre>
 <pre class="r"><code>onematch$getEndGameReason()</code></pre>
 <pre><code>## [1] &quot;victory&quot;</code></pre>
 <p>We get the roster for one of the two sides in a match like this.</p>
-<pre class="r"><code>roster &lt;- onematch$getRoster( 1 ) # or 2
-inherits( roster, 'VGRoster' )</code></pre>
+<pre class="r"><code>roster &lt;- onematch$getRoster( 1 ) # or 2</code></pre>
+<pre><code>## [1] &quot;e7e498f5-08d9-11e7-91e8-0242ac110004&quot;</code></pre>
+<pre class="r"><code>inherits( roster, 'VGRoster' )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>roster$getStats()</code></pre>
 <pre><code>## $acesEarned
-## [1] 2
+## [1] 0
 ## 
 ## $gold
-## [1] 56903
+## [1] 44928
 ## 
 ## $heroKills
-## [1] 28
+## [1] 9
 ## 
 ## $krakenCaptures
-## [1] 2
+## [1] 0
 ## 
 ## $side
 ## [1] &quot;left/blue&quot;
 ## 
 ## $turretKills
-## [1] 5
+## [1] 1
 ## 
 ## $turretsRemaining
-## [1] 1</code></pre>
+## [1] 5</code></pre>
 <pre class="r"><code>roster$getTeamName()</code></pre>
-<pre><code>## [1] NA</code></pre>
+<pre><code>## NULL</code></pre>
+<pre><code>## NULL</code></pre>
 <p>We get the members of that roster like this.</p>
-<pre class="r"><code>first &lt;- roster$getMembers()[[1]]
-inherits( first, 'VGPlayer' )</code></pre>
+<pre class="r"><code>first &lt;- roster$getMembers()[[1]]</code></pre>
+<pre><code>## [1] &quot;e7e49900-08d9-11e7-91e8-0242ac110004&quot;
+## [1] &quot;471cfb8e-9b7c-11e4-9297-06eb725f8a76&quot;
+## [1] &quot;e7e49907-08d9-11e7-91e8-0242ac110004&quot;
+## [1] &quot;65a8089a-fb71-11e5-be64-06388a2f2ea7&quot;
+## [1] &quot;e7e4990e-08d9-11e7-91e8-0242ac110004&quot;
+## [1] &quot;db7b6e0c-3729-11e5-b7db-0628b69bf6d1&quot;</code></pre>
+<pre class="r"><code>inherits( first, 'VGPlayer' )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>first$getName()</code></pre>
-<pre><code>## [1] &quot;glory03&quot;</code></pre>
+<pre><code>## [1] &quot;Vegeta09&quot;</code></pre>
 <pre class="r"><code>first$getStats()</code></pre>
-<pre><code>## $lifetimeGold
-## [1] 19459.25
+<pre><code>## $level
+## [1] 29
+## 
+## $lifetimeGold
+## [1] 15534
 ## 
 ## $lossStreak
-## [1] 1
+## [1] 4
+## 
+## $played
+## [1] 1801
+## 
+## $played_ranked
+## [1] 884
 ## 
 ## $winStreak
-## [1] 0</code></pre>
+## [1] 0
+## 
+## $wins
+## [1] 962
+## 
+## $xp
+## [1] 144452</code></pre>
 <pre class="r"><code>first$getHeroName()</code></pre>
-<pre><code>## [1] &quot;*Skye*&quot;</code></pre>
+<pre><code>## [1] &quot;*Glaive*&quot;</code></pre>
 <pre class="r"><code>first$getHeroStats()</code></pre>
 <pre><code>## $assists
-## [1] 11
-## 
-## $crystalMineCaptures
 ## [1] 1
 ## 
+## $crystalMineCaptures
+## [1] 0
+## 
 ## $deaths
-## [1] 10
+## [1] 2
 ## 
 ## $farm
-## [1] 106.45
+## [1] 29.475
 ## 
 ## $firstAfkTime
 ## [1] -1
 ## 
 ## $goldMineCaptures
-## [1] 0
+## [1] 1
 ## 
 ## $itemGrants
-## $itemGrants$`*1000_Item_HalcyonPotion*`
-## [1] 4
-## 
-## $itemGrants$`*1003_Item_CrystalBit*`
-## [1] 5
-## 
-## $itemGrants$`*1009_Item_EclipsePrism*`
+## $itemGrants$`*1002_Item_WeaponBlade*`
 ## [1] 1
 ## 
-## $itemGrants$`*1013_Item_Shatterglass*`
-## [1] 3
-## 
-## $itemGrants$`*1022_Item_CoatOfPlates*`
+## $itemGrants$`*1005_Item_SixSins*`
 ## [1] 1
 ## 
-## $itemGrants$`*1024_Item_MetalJacket*`
-## [1] 1
-## 
-## $itemGrants$`*1025_Item_EnergyBattery*`
-## [1] 1
-## 
-## $itemGrants$`*1027_Item_VoidBattery*`
+## $itemGrants$`*1014_Item_TornadoTrigger*`
 ## [1] 1
 ## 
 ## $itemGrants$`*1030_Item_SprintBoots*`
 ## [1] 1
 ## 
-## $itemGrants$`*1032_Item_TravelBoots*`
+## $itemGrants$`*1034_Item_SerpentMask*`
 ## [1] 1
 ## 
-## $itemGrants$`*1044_Item_Frostburn*`
+## $itemGrants$`*1047_Item_JourneyBoots*`
 ## [1] 1
 ## 
-## $itemGrants$`*1072_Item_HeavyPrism*`
-## [1] 4
+## $itemGrants$`*1049_Item_TyrantsMonocle*`
+## [1] 1
 ## 
-## $itemGrants$`*1087_Item_HalcyonChargers*`
+## $itemGrants$`*1052_Item_WeaponInfusion*`
+## [1] 1
+## 
+## $itemGrants$`*1061_Item_LightShield*`
+## [1] 1
+## 
+## $itemGrants$`*1062_Item_KineticShield*`
+## [1] 1
+## 
+## $itemGrants$`*1063_Item_Aegis*`
+## [1] 1
+## 
+## $itemGrants$`*1065_Item_HeavySteel*`
+## [1] 1
+## 
+## $itemGrants$`*1068_Item_LuckyStrike*`
+## [1] 1
+## 
+## $itemGrants$`*1080_Item_MinionsFoot*`
 ## [1] 1
 ## 
 ## 
@@ -254,57 +282,60 @@ inherits( first, 'VGPlayer' )</code></pre>
 ## named list()
 ## 
 ## $itemUses
-## $itemUses$`*1000_Item_HalcyonPotion*`
-## [1] 4
-## 
-## $itemUses$`*1032_Item_TravelBoots*`
+## $itemUses$`*1030_Item_SprintBoots*`
 ## [1] 1
 ## 
-## $itemUses$`*1087_Item_HalcyonChargers*`
-## [1] 6
+## $itemUses$`*1047_Item_JourneyBoots*`
+## [1] 1
+## 
+## $itemUses$`*1052_Item_WeaponInfusion*`
+## [1] 1
+## 
+## $itemUses$`*1063_Item_Aegis*`
+## [1] 1
 ## 
 ## 
 ## $items
-## [1] &quot;Frostburn&quot;        &quot;Crystal3&quot;         &quot;Crystal3&quot;        
-## [4] &quot;Halcyon Chargers&quot; &quot;Crystal3&quot;         &quot;Armor3&quot;          
+## [1] &quot;Serpent Mask&quot;    &quot;Tornado Trigger&quot; &quot;Tyrants Monocle&quot; &quot;Aegis&quot;          
+## [5] &quot;Journey Boots&quot;   &quot;Heavy Steel&quot;    
 ## 
 ## $jungleKills
-## [1] 5
+## [1] 9
 ## 
 ## $karmaLevel
-## [1] 2
-## 
-## $kills
-## [1] 11
-## 
-## $krakenCaptures
 ## [1] 1
 ## 
+## $kills
+## [1] 5
+## 
+## $krakenCaptures
+## [1] 0
+## 
 ## $level
-## [1] 28
+## [1] 29
 ## 
 ## $minionKills
-## [1] 82
+## [1] 13
 ## 
 ## $nonJungleMinionKills
-## [1] 77
+## [1] 4
+## 
+## $skillTier
+## [1] 3
 ## 
 ## $skinKey
-## [1] &quot;Skye_Skin_Eagle_T1&quot;
+## [1] &quot;Glaive_Skin_Prehistoric_T3&quot;
 ## 
 ## $turretCaptures
-## [1] 3
+## [1] 1
 ## 
 ## $wentAfk
 ## [1] FALSE
 ## 
 ## $winner
-## [1] TRUE
-## 
-## $wins
-## [1] 316</code></pre>
+## [1] TRUE</code></pre>
 <p>You can filter your match set by time…</p>
-<pre class="r"><code>query &lt;- VGAPI$new()
+<pre class="r"><code>query &lt;- VGAPI$new( myAPIKey )
 # defaults to all matches in last 3 hours, but we can change it...how about the 5 minutes after midnight?
 query$setStartTime( '2017-01-11T00:00:00Z' ) # or a POSIXct date-time instance instead
 query$setEndTime( '2017-01-11T00:05:00Z' ) # or a POSIXct date-time instance instead
@@ -313,20 +344,24 @@ query$fetchMatches()
 if ( !is.null( query$getError() ) ) {
   print( rawToChar( query$getError()$headers ) )
   print( rawToChar( query$getError()$content ) )
-}
-query$count()</code></pre>
-<pre><code>## [1] 28</code></pre>
+}</code></pre>
+<pre><code>## [1] &quot;HTTP/1.1 404 Not Found\r\nDate: Tue, 14 Mar 2017 19:40:51 GMT\r\nContent-Type: application/vnd.api+json\r\nContent-Length: 59\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nVary: Accept-Encoding\r\nX-Ratelimit-Limit: 10\r\nX-Ratelimit-Remaining: 8\r\nX-Ratelimit-Reset: 11717312000\r\nX-Request-Id: c31ea3d4-bad2-45ed-8bb6-18a544197af1\r\nX-Title-Id: semc-vainglory\r\n\r\n&quot;
+## [1] &quot;{\&quot;errors\&quot;:[{\&quot;title\&quot;:\&quot;Not Found\&quot;}]}\n&quot;</code></pre>
+<pre class="r"><code>query$count()</code></pre>
+<pre><code>## [1] 0</code></pre>
 <p>…or by player or team name.</p>
-<pre class="r"><code>query &lt;- VGAPI$new()
+<pre class="r"><code>query &lt;- VGAPI$new( myAPIKey )
 query$setPlayerNames( 'CrIxX' ) # can be a comma-separated list (no spaces)
 # can also do setTeamNames( 'foo,bar,...' )
 query$fetchMatches()
 if ( !is.null( query$getError() ) ) {
   print( rawToChar( query$getError()$headers ) )
   print( rawToChar( query$getError()$content ) )
-}
-query$count()</code></pre>
-<pre><code>## [1] 1</code></pre>
+}</code></pre>
+<pre><code>## [1] &quot;HTTP/1.1 404 Not Found\r\nDate: Tue, 14 Mar 2017 19:40:51 GMT\r\nContent-Type: application/vnd.api+json\r\nContent-Length: 59\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nVary: Accept-Encoding\r\nX-Ratelimit-Limit: 10\r\nX-Ratelimit-Remaining: 7\r\nX-Ratelimit-Reset: 17671121000\r\nX-Request-Id: 94cd4c68-199f-49e4-9d15-1f3999ec80d6\r\nX-Title-Id: semc-vainglory\r\n\r\n&quot;
+## [1] &quot;{\&quot;errors\&quot;:[{\&quot;title\&quot;:\&quot;Not Found\&quot;}]}\n&quot;</code></pre>
+<pre class="r"><code>query$count()</code></pre>
+<pre><code>## [1] 0</code></pre>
 <p>Or filter by both, not shown here.</p>
 
 
