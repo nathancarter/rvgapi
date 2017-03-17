@@ -52,6 +52,15 @@ first$getHeroName()
 first$getHeroStats()
 ```
 
+We get the telemetry data for the match like this.
+
+```{r}
+T <- onematch$getTelemetry()
+T$getCount()
+T$getEvent( 1 )
+T$getEvent( T$getCount() )
+```
+
 You can filter your match set by time...
 
 ```{r}

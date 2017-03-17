@@ -127,6 +127,12 @@ VGMatch <- R6Class(
         private$lookup( private$match$relationships$rosters$data[[index]]$id ),
         private$api )
     },
+    getTelemetry = function () {
+      id <- private$match$relationships$assets$data[[1]]$id
+      url <- private$lookup( id )$attributes$URL
+      if ( is.null( url ) ) return( NULL )
+      VGTelemetry$new( self, fromJSON( url, simplifyDataFrame = FALSE ) )
+    },
     cheater = function () private$match
   ),
   private = list(
@@ -181,5 +187,70 @@ VGPlayer <- R6Class(
     api = NULL,
     player = NULL,
     lookup = function ( id ) private$api$lookup( id )
+  )
+)
+
+VGTelemetry <- R6Class(
+  'VGTelemetry',
+  public = list(
+    initialize = function ( match, data ) {
+      private$match <- match
+      private$data <- data
+    },
+    # total number of events
+    getCount = function () length( private$data ),
+    # get one event
+    getEvent = function ( i ) private$data[[i]],
+    # or get its attributes
+    getTime = function ( i ) self$getEvent( i )$time,
+    getType = function ( i ) self$getEvent( i )$type,
+    getTeam = function ( i ) self$getEvent( i )$payload$Team,
+    getActor = function ( i ) self$getEvent( i )$payload$Actor,
+    getLevel = function ( i ) self$getEvent( i )$payload$Level,
+    getLifetimeGold = function ( i ) self$getEvent( i )$payload$LifetimeGold,
+    getItem = function ( i ) self$getEvent( i )$payload$Item,
+    getCost = function ( i ) self$getEvent( i )$payload$Cost,
+    getKilled = function ( i ) self$getEvent( i )$payload$Killed,
+    getKilledTeam = function ( i ) self$getEvent( i )$payload$KilledTeam,
+    getGold = function ( i ) self$getEvent( i )$payload$Gold,
+    getIsHero = function ( i ) self$getEvent( i )$payload$IsHero,
+    getTargetIsHero = function ( i ) self$getEvent( i )$payload$TargetIsHero,
+    getPosition = function ( i ) self$getEvent( i )$payload$Position,
+    # functions about the whole set of data
+    getActors = function ( team ) {
+      if ( team == 1 ) team <- 'Left'
+      if ( team == 2 ) team <- 'Right'
+      result <- c()
+      for ( event in private$data ) {
+        if ( event$payload$Team == team ) {
+          if ( !( event$payload$Actor %in% result ) ) {
+            result <- c( result, event$payload$Actor )
+            if ( length( result ) == 3 ) break
+          }
+        }
+      }
+      result
+    },
+    getStartTime = function () self$getTime( 1 ),
+    getEndTime = function () self$getTime( self$getCount() ),
+    getDuration = function () difftime( self$getEndTime(), self$getStartTime(), units='secs' ),
+    lastKnownPosition = function ( team, actor, i ) {
+      if ( team == 1 ) team <- 'Left'
+      if ( team == 2 ) team <- 'Right'
+      while ( i >= 1 ) {
+        e <- self$getEvent( i )
+        if ( ( e$payload$Killed == actor ) && ( e$payload$KilledTeam == team ) )
+          return( NULL )
+        if ( ( e$payload$Team == team ) && ( e$payload$Actor == actor )
+                                        && !is.null( e$payload$Position ) )
+          return( e$payload$Position )
+        i <- i - 1
+      }
+      return( NULL )
+    }
+  ),
+  private = list(
+    match = NULL,
+    data = NULL
   )
 )

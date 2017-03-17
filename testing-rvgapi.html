@@ -139,9 +139,9 @@ query$getError() # will be null if all this succeeded</code></pre>
 inherits( onematch, 'VGMatch' )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>onematch$getTime()</code></pre>
-<pre><code>## [1] &quot;2017-03-14 20:40:57 UTC&quot;</code></pre>
+<pre><code>## [1] &quot;2017-03-17 21:51:28 UTC&quot;</code></pre>
 <pre class="r"><code>onematch$getDuration()</code></pre>
-<pre><code>## [1] 273</code></pre>
+<pre><code>## [1] 238</code></pre>
 <pre class="r"><code>onematch$getGameMode()</code></pre>
 <pre><code>## [1] &quot;blitz_pvp_ranked&quot;</code></pre>
 <pre class="r"><code>onematch$getRegion()</code></pre>
@@ -150,7 +150,7 @@ inherits( onematch, 'VGMatch' )</code></pre>
 <pre><code>## [1] &quot;victory&quot;</code></pre>
 <p>We get the roster for one of the two sides in a match like this.</p>
 <pre class="r"><code>roster &lt;- onematch$getRoster( 1 ) # or 2</code></pre>
-<pre><code>## [1] &quot;e7e498f5-08d9-11e7-91e8-0242ac110004&quot;</code></pre>
+<pre><code>## [1] &quot;10a50626-0b3b-11e7-934d-0242ac110009&quot;</code></pre>
 <pre class="r"><code>inherits( roster, 'VGRoster' )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>roster$getStats()</code></pre>
@@ -158,10 +158,10 @@ inherits( onematch, 'VGMatch' )</code></pre>
 ## [1] 0
 ## 
 ## $gold
-## [1] 44928
+## [1] 41161
 ## 
 ## $heroKills
-## [1] 9
+## [1] 3
 ## 
 ## $krakenCaptures
 ## [1] 0
@@ -170,51 +170,51 @@ inherits( onematch, 'VGMatch' )</code></pre>
 ## [1] &quot;left/blue&quot;
 ## 
 ## $turretKills
-## [1] 1
+## [1] 2
 ## 
 ## $turretsRemaining
-## [1] 5</code></pre>
+## [1] 4</code></pre>
 <pre class="r"><code>roster$getTeamName()</code></pre>
 <pre><code>## NULL</code></pre>
 <pre><code>## NULL</code></pre>
 <p>We get the members of that roster like this.</p>
 <pre class="r"><code>first &lt;- roster$getMembers()[[1]]</code></pre>
-<pre><code>## [1] &quot;e7e49900-08d9-11e7-91e8-0242ac110004&quot;
-## [1] &quot;471cfb8e-9b7c-11e4-9297-06eb725f8a76&quot;
-## [1] &quot;e7e49907-08d9-11e7-91e8-0242ac110004&quot;
-## [1] &quot;65a8089a-fb71-11e5-be64-06388a2f2ea7&quot;
-## [1] &quot;e7e4990e-08d9-11e7-91e8-0242ac110004&quot;
-## [1] &quot;db7b6e0c-3729-11e5-b7db-0628b69bf6d1&quot;</code></pre>
+<pre><code>## [1] &quot;10a4f56e-0b3b-11e7-934d-0242ac110009&quot;
+## [1] &quot;5d365160-7459-11e6-8cb2-06fc87f1dd11&quot;
+## [1] &quot;10a4fe71-0b3b-11e7-934d-0242ac110009&quot;
+## [1] &quot;1327787c-7910-11e6-9c6b-068789513eb5&quot;
+## [1] &quot;10a50259-0b3b-11e7-934d-0242ac110009&quot;
+## [1] &quot;ed23c7b6-78b7-11e4-ab4c-06d90c28bf1a&quot;</code></pre>
 <pre class="r"><code>inherits( first, 'VGPlayer' )</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>first$getName()</code></pre>
-<pre><code>## [1] &quot;Vegeta09&quot;</code></pre>
+<pre><code>## [1] &quot;PhuckYoo&quot;</code></pre>
 <pre class="r"><code>first$getStats()</code></pre>
 <pre><code>## $level
-## [1] 29
+## [1] 28
 ## 
 ## $lifetimeGold
-## [1] 15534
+## [1] 13492.75
 ## 
 ## $lossStreak
-## [1] 4
+## [1] 10
 ## 
 ## $played
-## [1] 1801
+## [1] 894
 ## 
 ## $played_ranked
-## [1] 884
+## [1] 448
 ## 
 ## $winStreak
 ## [1] 0
 ## 
 ## $wins
-## [1] 962
+## [1] 551
 ## 
 ## $xp
-## [1] 144452</code></pre>
+## [1] 134738</code></pre>
 <pre class="r"><code>first$getHeroName()</code></pre>
-<pre><code>## [1] &quot;*Glaive*&quot;</code></pre>
+<pre><code>## [1] &quot;*SAW*&quot;</code></pre>
 <pre class="r"><code>first$getHeroStats()</code></pre>
 <pre><code>## $assists
 ## [1] 1
@@ -226,40 +226,43 @@ inherits( onematch, 'VGMatch' )</code></pre>
 ## [1] 2
 ## 
 ## $farm
-## [1] 29.475
+## [1] 14.025
 ## 
 ## $firstAfkTime
 ## [1] -1
 ## 
 ## $goldMineCaptures
-## [1] 1
+## [1] 0
 ## 
 ## $itemGrants
-## $itemGrants$`*1002_Item_WeaponBlade*`
+## $itemGrants$`*1003_Item_CrystalBit*`
 ## [1] 1
 ## 
-## $itemGrants$`*1005_Item_SixSins*`
+## $itemGrants$`*1013_Item_Shatterglass*`
 ## [1] 1
 ## 
-## $itemGrants$`*1014_Item_TornadoTrigger*`
+## $itemGrants$`*1016_Item_Dragonheart*`
 ## [1] 1
 ## 
-## $itemGrants$`*1030_Item_SprintBoots*`
+## $itemGrants$`*1022_Item_CoatOfPlates*`
 ## [1] 1
 ## 
-## $itemGrants$`*1034_Item_SerpentMask*`
+## $itemGrants$`*1024_Item_MetalJacket*`
+## [1] 1
+## 
+## $itemGrants$`*1032_Item_TravelBoots*`
+## [1] 1
+## 
+## $itemGrants$`*1043_Item_ReflexBlock*`
 ## [1] 1
 ## 
 ## $itemGrants$`*1047_Item_JourneyBoots*`
 ## [1] 1
 ## 
-## $itemGrants$`*1049_Item_TyrantsMonocle*`
+## $itemGrants$`*1050_Item_Aftershock*`
 ## [1] 1
 ## 
 ## $itemGrants$`*1052_Item_WeaponInfusion*`
-## [1] 1
-## 
-## $itemGrants$`*1061_Item_LightShield*`
 ## [1] 1
 ## 
 ## $itemGrants$`*1062_Item_KineticShield*`
@@ -268,72 +271,102 @@ inherits( onematch, 'VGMatch' )</code></pre>
 ## $itemGrants$`*1063_Item_Aegis*`
 ## [1] 1
 ## 
-## $itemGrants$`*1065_Item_HeavySteel*`
-## [1] 1
-## 
-## $itemGrants$`*1068_Item_LuckyStrike*`
-## [1] 1
-## 
-## $itemGrants$`*1080_Item_MinionsFoot*`
-## [1] 1
-## 
 ## 
 ## $itemSells
-## named list()
+## $itemSells$`*1052_Item_WeaponInfusion*`
+## [1] 1
+## 
 ## 
 ## $itemUses
-## $itemUses$`*1030_Item_SprintBoots*`
+## $itemUses$`*1032_Item_TravelBoots*`
+## [1] 2
+## 
+## $itemUses$`*1043_Item_ReflexBlock*`
 ## [1] 1
 ## 
 ## $itemUses$`*1047_Item_JourneyBoots*`
 ## [1] 1
 ## 
-## $itemUses$`*1052_Item_WeaponInfusion*`
-## [1] 1
-## 
 ## $itemUses$`*1063_Item_Aegis*`
-## [1] 1
+## [1] 3
 ## 
 ## 
 ## $items
-## [1] &quot;Serpent Mask&quot;    &quot;Tornado Trigger&quot; &quot;Tyrants Monocle&quot; &quot;Aegis&quot;          
-## [5] &quot;Journey Boots&quot;   &quot;Heavy Steel&quot;    
+## [1] &quot;Aftershock&quot;    &quot;Aegis&quot;         &quot;Metal Jacket&quot;  &quot;Shatterglass&quot; 
+## [5] &quot;Journey Boots&quot; &quot;Dragonheart&quot;  
 ## 
 ## $jungleKills
-## [1] 9
+## [1] 3
 ## 
 ## $karmaLevel
-## [1] 1
+## [1] 2
 ## 
 ## $kills
-## [1] 5
+## [1] 2
 ## 
 ## $krakenCaptures
 ## [1] 0
 ## 
 ## $level
-## [1] 29
+## [1] 28
 ## 
 ## $minionKills
-## [1] 13
-## 
-## $nonJungleMinionKills
-## [1] 4
-## 
-## $skillTier
 ## [1] 3
 ## 
+## $nonJungleMinionKills
+## [1] 0
+## 
+## $skillTier
+## [1] 14
+## 
 ## $skinKey
-## [1] &quot;Glaive_Skin_Prehistoric_T3&quot;
+## [1] &quot;SAW_Skin_SAWborg_T2&quot;
 ## 
 ## $turretCaptures
-## [1] 1
+## [1] 0
 ## 
 ## $wentAfk
 ## [1] FALSE
 ## 
 ## $winner
-## [1] TRUE</code></pre>
+## [1] FALSE</code></pre>
+<p>We get the telemetry data for the match like this.</p>
+<pre class="r"><code>T &lt;- onematch$getTelemetry()</code></pre>
+<pre><code>## [1] &quot;10abbf38-0b3b-11e7-934d-0242ac110009&quot;</code></pre>
+<pre class="r"><code>T$getCount()</code></pre>
+<pre><code>## [1] 889</code></pre>
+<pre class="r"><code>T$getEvent( 1 )</code></pre>
+<pre><code>## $time
+## [1] &quot;2017-03-17T17:51:59+0000&quot;
+## 
+## $type
+## [1] &quot;PlayerFirstSpawn&quot;
+## 
+## $payload
+## $payload$Team
+## [1] &quot;Left&quot;
+## 
+## $payload$Actor
+## [1] &quot;*Ringo*&quot;</code></pre>
+<pre class="r"><code>T$getEvent( T$getCount() )</code></pre>
+<pre><code>## $time
+## [1] &quot;2017-03-17T17:56:20+0000&quot;
+## 
+## $type
+## [1] &quot;UseAbility&quot;
+## 
+## $payload
+## $payload$Team
+## [1] &quot;Right&quot;
+## 
+## $payload$Actor
+## [1] &quot;*Vox*&quot;
+## 
+## $payload$Ability
+## [1] &quot;Withdraw&quot;
+## 
+## $payload$Position
+## [1] 36.96  0.01  5.29</code></pre>
 <p>You can filter your match set by time…</p>
 <pre class="r"><code>query &lt;- VGAPI$new( myAPIKey )
 # defaults to all matches in last 3 hours, but we can change it...how about the 5 minutes after midnight?
@@ -345,7 +378,7 @@ if ( !is.null( query$getError() ) ) {
   print( rawToChar( query$getError()$headers ) )
   print( rawToChar( query$getError()$content ) )
 }</code></pre>
-<pre><code>## [1] &quot;HTTP/1.1 404 Not Found\r\nDate: Tue, 14 Mar 2017 19:40:51 GMT\r\nContent-Type: application/vnd.api+json\r\nContent-Length: 59\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nVary: Accept-Encoding\r\nX-Ratelimit-Limit: 10\r\nX-Ratelimit-Remaining: 8\r\nX-Ratelimit-Reset: 11717312000\r\nX-Request-Id: c31ea3d4-bad2-45ed-8bb6-18a544197af1\r\nX-Title-Id: semc-vainglory\r\n\r\n&quot;
+<pre><code>## [1] &quot;HTTP/1.1 404 Not Found\r\nDate: Fri, 17 Mar 2017 20:51:23 GMT\r\nContent-Type: application/vnd.api+json\r\nContent-Length: 59\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nVary: Accept-Encoding\r\nX-Ratelimit-Limit: 10\r\nX-Ratelimit-Remaining: 8\r\nX-Ratelimit-Reset: 10930587000\r\nX-Request-Id: 1617f8f9-80b6-48a8-bfcb-e623119f4378\r\nX-Title-Id: semc-vainglory\r\n\r\n&quot;
 ## [1] &quot;{\&quot;errors\&quot;:[{\&quot;title\&quot;:\&quot;Not Found\&quot;}]}\n&quot;</code></pre>
 <pre class="r"><code>query$count()</code></pre>
 <pre><code>## [1] 0</code></pre>
@@ -358,7 +391,7 @@ if ( !is.null( query$getError() ) ) {
   print( rawToChar( query$getError()$headers ) )
   print( rawToChar( query$getError()$content ) )
 }</code></pre>
-<pre><code>## [1] &quot;HTTP/1.1 404 Not Found\r\nDate: Tue, 14 Mar 2017 19:40:51 GMT\r\nContent-Type: application/vnd.api+json\r\nContent-Length: 59\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nVary: Accept-Encoding\r\nX-Ratelimit-Limit: 10\r\nX-Ratelimit-Remaining: 7\r\nX-Ratelimit-Reset: 17671121000\r\nX-Request-Id: 94cd4c68-199f-49e4-9d15-1f3999ec80d6\r\nX-Title-Id: semc-vainglory\r\n\r\n&quot;
+<pre><code>## [1] &quot;HTTP/1.1 404 Not Found\r\nDate: Fri, 17 Mar 2017 20:51:23 GMT\r\nContent-Type: application/vnd.api+json\r\nContent-Length: 59\r\nConnection: keep-alive\r\nContent-Encoding: gzip\r\nVary: Accept-Encoding\r\nX-Ratelimit-Limit: 10\r\nX-Ratelimit-Remaining: 7\r\nX-Ratelimit-Reset: 16889612000\r\nX-Request-Id: 51435b00-40dd-49f0-9b7d-f02d343a80c5\r\nX-Title-Id: semc-vainglory\r\n\r\n&quot;
 ## [1] &quot;{\&quot;errors\&quot;:[{\&quot;title\&quot;:\&quot;Not Found\&quot;}]}\n&quot;</code></pre>
 <pre class="r"><code>query$count()</code></pre>
 <pre><code>## [1] 0</code></pre>
