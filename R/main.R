@@ -62,7 +62,7 @@ VGAPI <- R6Class(
     getMatch = function ( index )
       VGMatch$new( private$fetchedMatches$data[[index]], self ),
     lookup = function ( id ) {
-      print( id )
+      # print( id )
       if ( is.null( id ) ) return( NULL )
       for ( included in private$fetchedMatches$included )
         if ( included$id == id ) return( included )
