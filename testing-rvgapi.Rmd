@@ -15,7 +15,8 @@ We fetch a set of matches like this.
 
 ```{r}
 query <- VGAPI$new( myAPIKey ) # not optional -- you must have a key
-query$fetchMatches() # optional parameter is which page of results
+query$fetchMatches() # optional parameter is page offset
+# e.g., if you get first 50 results in one page, pass 50 as offset to next call
 query$getError() # will be null if all this succeeded
 query$count()
 ```
